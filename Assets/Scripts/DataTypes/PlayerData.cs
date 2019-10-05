@@ -6,6 +6,6 @@ using System.Collections.Generic;
 public class PlayerData
 {
     public int lifePoints;
-    public int userId;
+    public string _id;
     public string name;
 }
