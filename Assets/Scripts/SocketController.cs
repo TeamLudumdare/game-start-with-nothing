@@ -6,6 +6,8 @@ using SocketIO;
 public class SocketController : MonoBehaviour
 {
     
+    private PlayerData player;
+
     private static SocketController instance;
 
     public static SocketController Instance {
@@ -29,7 +31,7 @@ public class SocketController : MonoBehaviour
     {
         socket = this.GetComponent<SocketIOComponent>();
 
-        socket.On("HelloWorld", HelloWorld);
+        socket.On("InfoUser", SetInfoUser);
 
         socket.Emit("Entrei");
     }
@@ -38,4 +40,13 @@ public class SocketController : MonoBehaviour
 	{
 		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
 	}
+
+    private void SetInfoUser (SocketIOEvent e)
+    {
+        player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
+    }
+
+    public void FazerLogin () {
+        socket.Emit("Login");
+    }
 }
