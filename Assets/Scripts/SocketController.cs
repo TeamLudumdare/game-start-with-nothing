@@ -34,7 +34,7 @@ public class SocketController : MonoBehaviour
         socket = this.GetComponent<SocketIOComponent>();
 
         socket.On("ErrorLobby", ErrorLobby);
-        
+
         socket.On("InfoUser", SetInfoUser);
 
         socket.On("InfoLobby", SetInfoUser);
@@ -44,6 +44,7 @@ public class SocketController : MonoBehaviour
 
     public void ErrorLobby (SocketIOEvent e) {
         // TODO: Fazer emissão do objeto error pro gamemanager
+        ErrorData error = JsonUtility.FromJson<ErrorData>(e.data.ToString());
     }
 
     private void HelloWorld(SocketIOEvent e)
