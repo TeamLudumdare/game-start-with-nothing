@@ -29,9 +29,13 @@ public class SocketController : MonoBehaviour
     {
         socket = this.GetComponent<SocketIOComponent>();
 
-        socket.On("HelloWorld", HelloWorld);
+        socket.On("ErrorLobby", ErrorLobby);
 
         socket.Emit("Entrei");
+    }
+
+    public void ErrorLobby (SocketIOEvent e) {
+        // TODO: Fazer emissão do objeto error pro gamemanager
     }
 
     private void HelloWorld(SocketIOEvent e)
