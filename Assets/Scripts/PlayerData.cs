@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
+[Serializable]
 public class PlayerData
 {
-    private int lifePoints;
-    private int userId;
+    public int lifePoints;
+    public int userId;
+    public string name;
 }
