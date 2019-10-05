@@ -60,6 +60,7 @@ public class LoginController : MonoBehaviour
         if (FB.IsLoggedIn) {
             // Salva o userID do jogador
             userID = Facebook.Unity.AccessToken.CurrentAccessToken.UserId;
+            GameManager.Instance.UserLogged();
         } else {
             Debug.Log("O usuário cancelou o login");
         }
