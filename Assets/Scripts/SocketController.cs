@@ -6,7 +6,24 @@ using SocketIO;
 public class SocketController : MonoBehaviour
 {
     
+    private static SocketController instance;
+
+    public static SocketController Instance {
+        get {
+            return instance;
+        }
+    }
+
     private SocketIOComponent socket;
+
+    void Awake () {
+        if (instance == null) {
+            instance = this;
+        } else if (instance != this) {
+            Destroy(instance);
+        }
+        DontDestroyOnLoad(instance);
+    }
 
     void Start()
     {
