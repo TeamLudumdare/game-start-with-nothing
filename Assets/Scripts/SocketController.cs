@@ -8,6 +8,8 @@ public class SocketController : MonoBehaviour
     
     private PlayerData player;
 
+    private LobbyData lobby;
+
     private static SocketController instance;
 
     public static SocketController Instance {
@@ -33,6 +35,8 @@ public class SocketController : MonoBehaviour
 
         socket.On("InfoUser", SetInfoUser);
 
+        socket.On("InfoLobby", SetInfoUser);
+
         socket.Emit("Entrei");
     }
 
@@ -44,6 +48,11 @@ public class SocketController : MonoBehaviour
     private void SetInfoUser (SocketIOEvent e)
     {
         player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
+    }
+
+    private void SetInfoLobby (SocketIOEvent e)
+    {
+        lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
     }
 
     public void FazerLogin () {
