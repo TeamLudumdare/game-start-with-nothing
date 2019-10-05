@@ -14,6 +14,14 @@ public class LoginController : MonoBehaviour
         }
     }
 
+    private string userID;
+
+    public string UserID {
+        get {
+            return userID;
+        }
+    }
+
     void Awake () {
         if (!FB.IsInitialized) {
             FB.Init(InitCallback, OnHideUnity);
@@ -50,18 +58,13 @@ public class LoginController : MonoBehaviour
 
     private void AuthCallback (ILoginResult result) {
         if (FB.IsLoggedIn) {
-            // AccessToken class will have session details
-            var aToken = Facebook.Unity.AccessToken.CurrentAccessToken;
-            // Print current access token's User ID
-            Debug.Log(aToken.UserId);
-            // Print current access token's granted permissions
-            foreach (string perm in aToken.Permissions) {
-                Debug.Log(perm);
-            }
+            // Salva o userID do jogador
+            userID = Facebook.Unity.AccessToken.CurrentAccessToken.UserId;
         } else {
-            Debug.Log("User cancelled login");
+            Debug.Log("O usuário cancelou o login");
         }
     }
+    
     public void Login () {
         FB.LogInWithReadPermissions(null, AuthCallback);
     }
