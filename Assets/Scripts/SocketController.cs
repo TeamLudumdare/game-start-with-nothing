@@ -39,7 +39,10 @@ public class SocketController : MonoBehaviour
 
         socket.On("InfoLobby", SetInfoUser);
 
-        socket.Emit("Entrei");
+    }
+
+    public void CriarLobby (string nomePlayer) {
+        socket.Emit("CreateRoom", new JSONObject("{nome: " + nomePlayer + "}"));
     }
 
     public void ErrorLobby (SocketIOEvent e) {
