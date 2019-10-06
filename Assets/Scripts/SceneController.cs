@@ -32,16 +32,19 @@ public class SceneController : MonoBehaviour
     }
 
     private bool EnterLobby() {
+        if (SocketController.Instance == null) return false;
         var lobby = SocketController.Instance.Lobby;
         return lobby != null && !Equals(SceneManager.GetActiveScene().name, "SalaDeEspera");
     }
 
     private bool StartGameButton () {
+        if (SocketController.Instance == null) return false;
         var lobby = SocketController.Instance.Lobby;
         return Input.GetKeyUp(KeyCode.Return) && lobby.playersData.Count == 4;
     }
 
     private bool StartGame () {
+        if (SocketController.Instance == null) return false;
         var match = SocketController.Instance.Match;
         return match != null && !Equals(SceneManager.GetActiveScene().name, "FieldGame");
     }

@@ -6,11 +6,11 @@ using SocketIO;
 public class SocketController : MonoBehaviour
 {
     
-    private PlayerData player;
+    private PlayerData player = null;
 
-    private LobbyData lobby;
+    private LobbyData lobby = null;
 
-    private MatchData match;
+    private MatchData match = null;
 
     private static SocketController instance;
 
@@ -121,7 +121,7 @@ public class SocketController : MonoBehaviour
 
     public MatchData Match {
         get {
-            return Match;
+            return match;
         }
     }
 
