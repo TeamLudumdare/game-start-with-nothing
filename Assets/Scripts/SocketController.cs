@@ -62,13 +62,13 @@ public class SocketController : MonoBehaviour
     private void SetInfoUser (SocketIOEvent e)
     {
         player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
-        GameManager.Instance.SetPlayerInfo(player);
+        GameManager.Instance.Player = player;
     }
 
     private void SetInfoLobby (SocketIOEvent e)
     {
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
-        GameManager.Instance.SetLobby(lobby);
+        GameManager.Instance.Lobby = lobby;
     }
 
     private void SetInfoMatch (SocketIOEvent e)

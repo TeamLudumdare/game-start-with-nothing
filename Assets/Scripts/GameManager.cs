@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-
+    private LobbyData lobby;
     private PlayerData player;
 
     //players
@@ -56,11 +56,6 @@ public class GameManager : MonoBehaviour
         SetIds();
     }
 
-    public void SetPlayerInfo(PlayerData player)
-    {
-        this.player = player;
-    }
-
     public void UserLogged() {
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("ConectarNaSala"));
     }
@@ -73,6 +68,23 @@ public class GameManager : MonoBehaviour
         }
     }
     //events system
- 
+
+    public LobbyData Lobby {
+        get {
+            return lobby;
+        }
+        set {
+            lobby = value;
+        }
+    }
+
+    public PlayerData Player {
+        get {
+            return player;
+        }
+        set {
+            player = value;
+        }
+    }
 
 }
