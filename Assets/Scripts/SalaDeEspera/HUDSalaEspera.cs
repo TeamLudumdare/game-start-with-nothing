@@ -13,7 +13,7 @@ public class HUDSalaEspera : MonoBehaviour
     void Update()
     {
         nomeJogador.text = SocketController.Instance.Player.name;
-        aguardando.text = SocketController.Instance.Lobby.players < 4 ? "Waiting for players to enter ..." : "Anyone can press enter to start game";
+        aguardando.text = SocketController.Instance.Lobby.players < 4 ? "Waiting for players to enter ..." : "Anyone can press return to start game";
         playersOnline.text = SocketController.Instance.Lobby.players + " of 4 players entered";
         idLobby.text = "Lobby ID: " + SocketController.Instance.Lobby._id;
     }
