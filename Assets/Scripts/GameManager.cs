@@ -13,8 +13,6 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<Player> players = new List<Player>();
     //lista de id, deve receber os id do servidor, porem o primeiro id deve sempre ser o do jogador
-    [SerializeField]
-    private List<string> listOfIdsServe = new List<string>();
     private List<string> listOfIdsServeSorted = new List<string>();
     //TODO: CAMPO DE TESTE ID PLAYER
     [SerializeField]
@@ -35,18 +33,28 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(instance);
 
         
+    }
+    private void Start()
+    {
+        lobby = SocketController.Instance.Lobby;
+        player = SocketController.Instance.Player;
+        match = SocketController.Instance.Match;
+
+        //definindo id
+        myid = player._id;
+
         //fazendo testes de id, preechendo com ids genericos
         int playerIdIndexInList = -1;
         for (int i = 0; i < 4; i++)
         {
             if (i == 0)
             {
-                playerIdIndexInList = listOfIdsServe.BinarySearch(myid);
-                listOfIdsServeSorted.Add(listOfIdsServe[playerIdIndexInList]);
+                playerIdIndexInList = match.players.FindIndex((player) => player._id == myid);
+                listOfIdsServeSorted.Add(match.players[playerIdIndexInList]._id);
             }
             if (i != playerIdIndexInList)
             {
-                listOfIdsServeSorted.Add(listOfIdsServe[i]);
+                listOfIdsServeSorted.Add(match.players[i]._id);
             }
         }
         foreach (string id in listOfIdsServeSorted)
