@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
             players[i].SetId(listOfIdsServeSorted[i]);
         }
     }
-    
+    //events system
  
 
 }

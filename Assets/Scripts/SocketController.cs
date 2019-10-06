@@ -10,6 +10,8 @@ public class SocketController : MonoBehaviour
 
     private LobbyData lobby;
 
+    private MatchData match;
+
     private static SocketController instance;
 
     public static SocketController Instance {
@@ -31,29 +33,31 @@ public class SocketController : MonoBehaviour
 
     void Start()
     {
-        socket = this.GetComponent<SocketIOComponent>();
+        socket = gameObject.GetComponent<SocketIOComponent>();
 
         socket.On("ErrorLobby", ErrorLobby);
 
         socket.On("InfoUser", SetInfoUser);
 
-        socket.On("InfoLobby", SetInfoUser);
+        socket.On("InfoLobby", SetInfoLobby);
+
+        socket.On("MatchInfo", SetInfoMatch);
 
     }
 
     public void CriarLobby (string nomePlayer) {
-        socket.Emit("CreateRoom", new JSONObject("{nome: " + nomePlayer + "}"));
+        
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data["nome"] = nomePlayer;
+
+        socket.Emit("CreateRoom", new JSONObject(data));
     }
 
     public void ErrorLobby (SocketIOEvent e) {
         // TODO: Fazer emissão do objeto error pro gamemanager
         ErrorData error = JsonUtility.FromJson<ErrorData>(e.data.ToString());
     }
-
-    private void HelloWorld(SocketIOEvent e)
-	{
-		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
-	}
 
     private void SetInfoUser (SocketIOEvent e)
     {
@@ -64,9 +68,44 @@ public class SocketController : MonoBehaviour
     private void SetInfoLobby (SocketIOEvent e)
     {
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
+        GameManager.Instance.SetLobby(lobby);
     }
 
-    public void FazerLogin () {
-        socket.Emit("Login");
+    private void SetInfoMatch (SocketIOEvent e)
+    {
+        match = JsonUtility.FromJson<MatchData>(e.data.ToString());
+    }
+
+    public void FazerLogin (string _id, string nomePlayer) {
+
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data["nome"] = nomePlayer;
+
+        data["_id"] = _id;
+
+        socket.Emit("JoinRoom", new JSONObject(data));
+    }
+
+    public void StartGame () {
+        
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        
+        data["_id"] = lobby._id;
+
+        socket.Emit("StartGame", new JSONObject(data));
+
+    }
+
+    public PlayerData Player {
+        get {
+            return player;
+        }
+    }
+
+    public LobbyData Lobby {
+        get {
+            return lobby;
+        }
     }
 }
