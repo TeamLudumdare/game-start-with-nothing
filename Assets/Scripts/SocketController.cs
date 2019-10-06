@@ -62,20 +62,17 @@ public class SocketController : MonoBehaviour
     private void SetInfoUser (SocketIOEvent e)
     {
         player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
-        GameManager.Instance.Player = player;
     }
 
     private void SetInfoLobby (SocketIOEvent e)
     {
         Debug.Log(e.data.ToString());
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
-        GameManager.Instance.Lobby = lobby;
     }
 
     private void SetInfoMatch (SocketIOEvent e)
     {
         match = JsonUtility.FromJson<MatchData>(e.data.ToString());
-        GameManager.Instance.Match = match;
     }
 
     public void FazerLogin (string room, string nomePlayer) {
@@ -122,7 +119,10 @@ public class SocketController : MonoBehaviour
         }
     }
 
-    public void PuxarItem () {
-
+    public MatchData Match {
+        get {
+            return Match;
+        }
     }
+
 }
