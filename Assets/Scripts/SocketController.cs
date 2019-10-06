@@ -109,4 +109,8 @@ public class SocketController : MonoBehaviour
             return lobby;
         }
     }
+
+    public void PuxarItem () {
+
+    }
 }
