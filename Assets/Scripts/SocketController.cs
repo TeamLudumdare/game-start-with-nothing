@@ -66,7 +66,26 @@ public class SocketController : MonoBehaviour
         GameManager.Instance.SetLobby(lobby);
     }
 
-    public void FazerLogin () {
-        socket.Emit("Login");
+    public void FazerLogin (string _id, string nomePlayer) {
+
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data["nome"] = nomePlayer;
+
+        data["_id"] = _id;
+
+        socket.Emit("JoinRoom", new JSONObject(data));
+    }
+
+    public PlayerData Player {
+        get {
+            return player;
+        }
+    }
+
+    public LobbyData Lobby {
+        get {
+            return lobby;
+        }
     }
 }
