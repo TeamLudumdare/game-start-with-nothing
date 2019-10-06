@@ -66,7 +66,6 @@ public class SocketController : MonoBehaviour
 
     private void SetInfoLobby (SocketIOEvent e)
     {
-        Debug.Log(e.data.ToString());
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
     }
 
