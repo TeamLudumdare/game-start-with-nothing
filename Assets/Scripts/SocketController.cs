@@ -57,14 +57,13 @@ public class SocketController : MonoBehaviour
 
     private void SetInfoUser (SocketIOEvent e)
     {
-        Debug.Log(e.data.ToString());
         player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
     }
 
     private void SetInfoLobby (SocketIOEvent e)
     {
-        Debug.Log(e.data.ToString());
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
+        GameManager.Instance.SetLobby(lobby);
     }
 
     public void FazerLogin () {
