@@ -99,6 +99,17 @@ public class SocketController : MonoBehaviour
 
     }
 
+    public void AdicionarItem (string sprite, int itemId) {
+        
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data["item"] = "{ \"sprite\": " + sprite + ", \"itemId\": " + itemId + " }";
+        data["player"] = "{ \"_id\": " + player._id + " }";
+        data["match"] = "{ \"_id\": " + match._id + " }";
+
+        socket.Emit("AdicionarItem", new JSONObject(data));
+    }
+
     public PlayerData Player {
         get {
             return player;
