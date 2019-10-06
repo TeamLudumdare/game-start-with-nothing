@@ -5,6 +5,6 @@ using System.Collections.Generic;
 public class RoundLogData
 {
     public List<PlayerData> playersRead;
-    public List<ActionData> actions;
+    public List<ActionLogData> actions;
     public string _id;
 }
