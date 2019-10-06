@@ -12,4 +12,8 @@ public class HUD : MonoBehaviour
     public void CriarLobby () {
         SocketController.Instance.CriarLobby(nomeDoJogador.text);
     }
+
+    public void ConectarLobby () {
+        SocketController.Instance.FazerLogin(salaDoLobby.text, nomeDoJogador.text);
+    }
 }
