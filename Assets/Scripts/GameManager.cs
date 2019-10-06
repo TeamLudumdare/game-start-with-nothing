@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private static GameManager instance;
     private LobbyData lobby;
     private PlayerData player;
+    private MatchData match;
 
     //players
     [SerializeField]
@@ -56,9 +57,6 @@ public class GameManager : MonoBehaviour
         SetIds();
     }
 
-    public void UserLogged() {
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName("ConectarNaSala"));
-    }
     //Fazendo gameobjects dos players, recebrem seus ids do servido
     private void SetIds()
     {
@@ -84,6 +82,15 @@ public class GameManager : MonoBehaviour
         }
         set {
             player = value;
+        }
+    }
+
+    public MatchData Match {
+        get {
+            return match;
+        }
+        set {
+            match = value;
         }
     }
 
