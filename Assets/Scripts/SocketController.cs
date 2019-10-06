@@ -67,6 +67,7 @@ public class SocketController : MonoBehaviour
 
     private void SetInfoLobby (SocketIOEvent e)
     {
+        Debug.Log(e.data.ToString());
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
         GameManager.Instance.Lobby = lobby;
     }
@@ -77,13 +78,13 @@ public class SocketController : MonoBehaviour
         GameManager.Instance.Match = match;
     }
 
-    public void FazerLogin (string _id, string nomePlayer) {
+    public void FazerLogin (string room, string nomePlayer) {
 
         Dictionary<string, string> data = new Dictionary<string, string>();
 
         data["nome"] = nomePlayer;
 
-        data["_id"] = _id;
+        data["room"] = room;
 
         socket.Emit("JoinRoom", new JSONObject(data));
     }
