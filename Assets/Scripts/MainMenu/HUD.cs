@@ -8,7 +8,10 @@ public class HUD : MonoBehaviour
     [SerializeField] private InputField salaDoLobby;
     [SerializeField] private InputField nomeDoJogador;
 
-    // Update is called once per frame
+    private void Update () {
+        salaDoLobby.text = salaDoLobby.text.ToUpper();
+    }
+
     public void CriarLobby () {
         SocketController.Instance.CriarLobby(nomeDoJogador.text);
     }

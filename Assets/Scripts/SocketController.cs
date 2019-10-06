@@ -6,11 +6,11 @@ using SocketIO;
 public class SocketController : MonoBehaviour
 {
     
-    private PlayerData player;
+    private PlayerData player = null;
 
-    private LobbyData lobby;
+    private LobbyData lobby = null;
 
-    private MatchData match;
+    private MatchData match = null;
 
     private static SocketController instance;
 
@@ -62,28 +62,25 @@ public class SocketController : MonoBehaviour
     private void SetInfoUser (SocketIOEvent e)
     {
         player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
-        GameManager.Instance.Player = player;
     }
 
     private void SetInfoLobby (SocketIOEvent e)
     {
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
-        GameManager.Instance.Lobby = lobby;
     }
 
     private void SetInfoMatch (SocketIOEvent e)
     {
         match = JsonUtility.FromJson<MatchData>(e.data.ToString());
-        GameManager.Instance.Match = match;
     }
 
-    public void FazerLogin (string _id, string nomePlayer) {
+    public void FazerLogin (string room, string nomePlayer) {
 
         Dictionary<string, string> data = new Dictionary<string, string>();
 
         data["nome"] = nomePlayer;
 
-        data["_id"] = _id;
+        data["room"] = room;
 
         socket.Emit("JoinRoom", new JSONObject(data));
     }
@@ -98,6 +95,17 @@ public class SocketController : MonoBehaviour
 
     }
 
+    public void AdicionarItem (string sprite, int itemId) {
+        
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data["item"] = "{ \"sprite\": " + sprite + ", \"itemId\": " + itemId + " }";
+        data["player"] = "{ \"_id\": " + player._id + " }";
+        data["match"] = "{ \"_id\": " + match._id + " }";
+
+        socket.Emit("AdicionarItem", new JSONObject(data));
+    }
+
     public PlayerData Player {
         get {
             return player;
@@ -110,7 +118,10 @@ public class SocketController : MonoBehaviour
         }
     }
 
-    public void PuxarItem () {
-
+    public MatchData Match {
+        get {
+            return match;
+        }
     }
+
 }
