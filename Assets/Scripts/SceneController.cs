@@ -38,7 +38,7 @@ public class SceneController : MonoBehaviour
 
     private bool StartGameButton () {
         var lobby = GameManager.Instance.Lobby;
-        return Input.GetKeyDown(KeyCode.Return) && lobby.playersData.Count == 4;
+        return Input.GetKeyUp(KeyCode.Return) && lobby.playersData.Count == 4;
     }
 
     private bool StartGame () {
