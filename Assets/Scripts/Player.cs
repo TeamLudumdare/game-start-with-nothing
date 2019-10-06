@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class Player:MonoBehaviour
 {
-    private int lifePoints;
-    [SerializeField]
-    private string _id;//id referente ao seu indice no servidor
+    private PlayerData dados;
     private int moves;//numero de movimentos que o jogador pode realizar em sua jogada
-    // Start is called before the first frame update
-    public void SetId(string _id)
+
+    private void Start()
     {
-        this._id = _id;
+        this.dados = new PlayerData();
     }
+
+    public PlayerData Dados
+    {
+        get
+        {
+            return dados;
+        }
+        set
+        {
+            dados = value;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("TOCOU NO PLAYER >>>> "+_id);
+        Debug.Log("TOCOU NO PLAYER >>>> "+dados._id);
     }
 }

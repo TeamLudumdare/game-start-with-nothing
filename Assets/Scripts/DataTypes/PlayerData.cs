@@ -8,5 +8,5 @@ public class PlayerData
     public string _id;
     public string name;
     public bool alive;
-    public List<ItemData> items;
+    public ItemData[] items;
 }

@@ -6,6 +6,6 @@ public class ErrorData
 {
     public int players;
     public string _id;
-    public List<PlayerData> playersData;
+    public PlayerData[] playersData;
     public PlayerData host;
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 [Serializable]
 public class RoundLogData
 {
-    public List<PlayerData> playersRead;
-    public List<ActionLogData> actions;
+    public PlayerData[] playersRead;
+    public ActionLogData[] actions;
     public string _id;
 }
