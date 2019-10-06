@@ -2,20 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player:MonoBehaviour
 {
     private int lifePoints;
-    private int id;//id referente ao seu indice no servidor
+    [SerializeField]
+    private string _id;//id referente ao seu indice no servidor
     private int moves;//numero de movimentos que o jogador pode realizar em sua jogada
     // Start is called before the first frame update
-    void Start()
+    public void SetId(string _id)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        this._id = _id;
     }
 }

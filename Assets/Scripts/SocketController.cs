@@ -58,6 +58,7 @@ public class SocketController : MonoBehaviour
     private void SetInfoUser (SocketIOEvent e)
     {
         player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
+        GameManager.Instance.SetPlayerInfo(player);
     }
 
     private void SetInfoLobby (SocketIOEvent e)
