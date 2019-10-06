@@ -31,7 +31,7 @@ public class SocketController : MonoBehaviour
 
     void Start()
     {
-        socket = this.GetComponent<SocketIOComponent>();
+        socket = gameObject.GetComponent<SocketIOComponent>();
 
         socket.On("ErrorLobby", ErrorLobby);
 
@@ -42,7 +42,12 @@ public class SocketController : MonoBehaviour
     }
 
     public void CriarLobby (string nomePlayer) {
-        socket.Emit("CreateRoom", new JSONObject("{nome: " + nomePlayer + "}"));
+        
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data["nome"] = nomePlayer;
+
+        socket.Emit("CreateRoom", new JSONObject(data));
     }
 
     public void ErrorLobby (SocketIOEvent e) {
@@ -50,19 +55,16 @@ public class SocketController : MonoBehaviour
         ErrorData error = JsonUtility.FromJson<ErrorData>(e.data.ToString());
     }
 
-    private void HelloWorld(SocketIOEvent e)
-	{
-		Debug.Log("[SocketIO] Open received: " + e.name + " " + e.data);
-	}
-
     private void SetInfoUser (SocketIOEvent e)
     {
         player = JsonUtility.FromJson<PlayerData>(e.data.ToString());
+        Debug.Log(player);
     }
 
     private void SetInfoLobby (SocketIOEvent e)
     {
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
+        Debug.Log(lobby);
     }
 
     public void FazerLogin () {
