@@ -41,7 +41,7 @@ public class SocketController : MonoBehaviour
 
         socket.On("InfoLobby", SetInfoLobby);
 
-        socket.On("MatchInfo", SetInfoMatch)
+        socket.On("MatchInfo", SetInfoMatch);
 
     }
 
@@ -84,6 +84,16 @@ public class SocketController : MonoBehaviour
         data["_id"] = _id;
 
         socket.Emit("JoinRoom", new JSONObject(data));
+    }
+
+    public void StartGame () {
+        
+        Dictionary<string, string> data = new Dictionary<string, string>();
+        
+        data["_id"] = lobby._id;
+
+        socket.Emit("StartGame", new JSONObject(data));
+
     }
 
     public PlayerData Player {
