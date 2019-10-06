@@ -74,6 +74,7 @@ public class SocketController : MonoBehaviour
     private void SetInfoMatch (SocketIOEvent e)
     {
         match = JsonUtility.FromJson<MatchData>(e.data.ToString());
+        GameManager.Instance.Match = match;
     }
 
     public void FazerLogin (string _id, string nomePlayer) {
