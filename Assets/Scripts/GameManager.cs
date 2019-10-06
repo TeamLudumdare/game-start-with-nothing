@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //chupa pica
     public MatchData Match {
         get {
             return match;
@@ -92,5 +93,6 @@ public class GameManager : MonoBehaviour
             match = value;
         }
     }
+
 
 }

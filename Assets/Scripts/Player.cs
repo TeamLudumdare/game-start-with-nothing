@@ -13,4 +13,8 @@ public class Player:MonoBehaviour
     {
         this._id = _id;
     }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("TOCOU NO PLAYER >>>> "+_id);
+    }
 }

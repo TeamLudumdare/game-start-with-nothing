@@ -14,12 +14,15 @@ public class ItemManager : MonoBehaviour
         if (gameObject.tag == "Chest") {
             BuyItem();
         }
+        
     }
     private void BuyItem()
     {
+        numOfItems = GameObject.FindGameObjectsWithTag("Item").Length;
+        Debug.Log(numOfItems);
         Instantiate(myPrefab, new Vector3(listItemsBar[numOfItems].transform.position.x, listItemsBar[numOfItems].transform.position.y,
                                           listItemsBar[numOfItems].transform.position.z -0.5f),Quaternion.identity);
-        numOfItems++;
         //TODO: ENVIAR PARA O SERVIDOR QUE FOI ADIONADO UM ITEM A SUA LISTA, PARA ELE ATUALIZAR PARA TODOS OS JOGADORES
+        
     }
 }
