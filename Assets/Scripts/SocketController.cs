@@ -10,6 +10,8 @@ public class SocketController : MonoBehaviour
 
     private LobbyData lobby;
 
+    private MatchData match;
+
     private static SocketController instance;
 
     public static SocketController Instance {
@@ -39,6 +41,8 @@ public class SocketController : MonoBehaviour
 
         socket.On("InfoLobby", SetInfoLobby);
 
+        socket.On("MatchInfo", SetInfoMatch)
+
     }
 
     public void CriarLobby (string nomePlayer) {
@@ -64,6 +68,11 @@ public class SocketController : MonoBehaviour
     {
         lobby = JsonUtility.FromJson<LobbyData>(e.data.ToString());
         GameManager.Instance.SetLobby(lobby);
+    }
+
+    private void SetInfoMatch (SocketIOEvent e)
+    {
+        match = JsonUtility.FromJson<MatchData>(e.data.ToString());
     }
 
     public void FazerLogin (string _id, string nomePlayer) {
