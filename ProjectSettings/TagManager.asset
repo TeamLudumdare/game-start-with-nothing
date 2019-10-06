@@ -7,6 +7,10 @@ TagManager:
   - Enemy
   - Trash
   - Chest
+  - P1
+  - P3
+  - P4
+  - P2
   layers:
   - Default
   - TransparentFX
