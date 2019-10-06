@@ -24,6 +24,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(instance);
     }
 
+    void Update () {
+        if (Input.GetButtonUp("Submit") && Equals(SceneManager.GetActiveScene().name, "SalaDeEspera")) {
+            SocketController.Instance.StartGame();
+        }
+    }
+
     public void SetLobby (LobbyData lobby) {
         this.lobby = lobby;
         SceneManager.LoadScene("SalaDeEspera");
