@@ -9,6 +9,8 @@ public class MouseDrag : MonoBehaviour
     private Vector2 direction;
     private Vector3 startPosition;
     private float moveSpeed = 100f;
+    private string col;
+    private bool itsColliding = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +26,30 @@ public class MouseDrag : MonoBehaviour
             rb.velocity = Vector2.zero;
             transform.position = startPosition;
         }
+    }
+    private void OnMouseUpAsButton()
+    {
+        if (itsColliding)
+        {
+            if (col == "Enemy")
+            {
+                Debug.Log("Inimigo recebeu item");
+                //TODO:ENVIAR PARA SERVIDOR O ATAQUE E O PLAYER DE DESTINO
+            }
+            else if(col == "Center")
+            {
+                //TODO: ENVIAR PARA SERVIDOR O ITEM, AÇÃO GLOBAL
+            }
+        }    
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        col = collision.gameObject.tag;
+        itsColliding = true;
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        itsColliding = false;
     }
     void OnMouseDrag()
     {
