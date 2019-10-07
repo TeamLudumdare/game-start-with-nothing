@@ -1,23 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance;
-    private LobbyData lobby;
     private PlayerData player;
     private MatchData match;
 
     //players
     [SerializeField]
-    private List<Player> players = new List<Player>();
+    private Player[] players;
     //lista de id, deve receber os id do servidor, porem o primeiro id deve sempre ser o do jogador
-    [SerializeField]
-    private List<string> listOfIdsServe = new List<string>();
-    private List<string> listOfIdsServeSorted = new List<string>();
+    private List<PlayerData> listOfIdsServeSorted = new List<PlayerData>();
     //TODO: CAMPO DE TESTE ID PLAYER
-    [SerializeField]
     private string myid;
 
     public static GameManager Instance {
@@ -32,28 +29,58 @@ public class GameManager : MonoBehaviour
         } else if (instance != this) {
             Destroy(instance);
         }
-        DontDestroyOnLoad(instance);
+        DontDestroyOnLoad(instance);    
+    }
 
-        
+    private void Start()
+    {
+        player = SocketController.Instance.Player;
+        match = SocketController.Instance.Match;
+
+        //definindo id
+        myid = player._id;
+
         //fazendo testes de id, preechendo com ids genericos
         int playerIdIndexInList = -1;
         for (int i = 0; i < 4; i++)
         {
             if (i == 0)
             {
-                playerIdIndexInList = listOfIdsServe.BinarySearch(myid);
-                listOfIdsServeSorted.Add(listOfIdsServe[playerIdIndexInList]);
+                for (int j = 0; j < match.players.Length; j ++)
+                {
+                    if (match.players[j]._id == myid)
+                    {
+                        playerIdIndexInList = j;
+                        break;
+                    }
+                }
+                listOfIdsServeSorted.Add(match.players[playerIdIndexInList]);
             }
             if (i != playerIdIndexInList)
             {
-                listOfIdsServeSorted.Add(listOfIdsServe[i]);
+                listOfIdsServeSorted.Add(match.players[i]);
             }
         }
-        foreach (string id in listOfIdsServeSorted)
+
+        foreach (PlayerData player in listOfIdsServeSorted)
         {
-            Debug.Log(id);
+            Debug.Log(player._id);
         }
         SetIds();
+    }
+
+    private void Update()
+    {
+        match = SocketController.Instance.Match;
+        foreach (PlayerData p in match.players)
+        {
+            if (p._id == player._id)
+            {
+                player = p;
+                break;
+            }
+        }
+        
     }
 
     //Fazendo gameobjects dos players, recebrem seus ids do servido
@@ -61,19 +88,10 @@ public class GameManager : MonoBehaviour
     {
         for (int i=0;i<4;i++)
         {
-            players[i].SetId(listOfIdsServeSorted[i]);
+            players[i].Dados = listOfIdsServeSorted[i];
         }
     }
     //events system
-
-    public LobbyData Lobby {
-        get {
-            return lobby;
-        }
-        set {
-            lobby = value;
-        }
-    }
 
     public PlayerData Player {
         get {
@@ -84,6 +102,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //chupa pica
     public MatchData Match {
         get {
             return match;
@@ -92,5 +111,6 @@ public class GameManager : MonoBehaviour
             match = value;
         }
     }
+
 
 }

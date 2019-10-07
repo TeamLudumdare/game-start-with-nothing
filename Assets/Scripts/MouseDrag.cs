@@ -11,11 +11,13 @@ public class MouseDrag : MonoBehaviour
     private float moveSpeed = 100f;
     private string col;
     private bool itsColliding = false;
+    private SpriteRenderer m_SpriteRenderer;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         startPosition = transform.position;
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -34,6 +36,8 @@ public class MouseDrag : MonoBehaviour
             if (col == "Enemy")
             {
                 Debug.Log("Inimigo recebeu item");
+                Disable();
+                //DestroySelf();
                 //TODO:ENVIAR PARA SERVIDOR O ATAQUE E O PLAYER DE DESTINO
             }
             else if(col == "Center")
@@ -56,6 +60,14 @@ public class MouseDrag : MonoBehaviour
         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         direction = (mousePosition - transform.position).normalized;
         rb.velocity = new Vector2(direction.x * moveSpeed, direction.y * moveSpeed);
+    }
+    private void DestroySelf()
+    {
+        Destroy(gameObject);
+    }
+    private void Disable()
+    {
+        m_SpriteRenderer.color = Color.grey;
     }
 
 }

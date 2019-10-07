@@ -7,7 +7,9 @@ public class SceneController : MonoBehaviour
 {
 
     private static SceneController instance;
-    
+
+    private bool returnPressed = false;
+
     void Awake()
     {
         if (instance == null) {
@@ -24,6 +26,7 @@ public class SceneController : MonoBehaviour
             SceneManager.LoadScene("SalaDeEspera");
         }
         if (StartGameButton()) {
+            returnPressed = true;
             SocketController.Instance.StartGame();
         }
         if (StartGame ()) {
@@ -32,21 +35,22 @@ public class SceneController : MonoBehaviour
     }
 
     private bool EnterLobby() {
-        if (SocketController.Instance == null) return false;
         var lobby = SocketController.Instance.Lobby;
-        return lobby != null && !Equals(SceneManager.GetActiveScene().name, "SalaDeEspera");
+        return lobby != null && Equals(SceneManager.GetActiveScene().name, "MainMenu");
     }
 
     private bool StartGameButton () {
-        if (SocketController.Instance == null) return false;
         var lobby = SocketController.Instance.Lobby;
-        return Input.GetKeyUp(KeyCode.Return) && lobby.playersData.Count == 4;
+        if (lobby != null && !returnPressed)
+        {
+            return Input.GetButton("Submit") && lobby.playersData.Length == 4;
+        }
+        return false;
     }
 
     private bool StartGame () {
-        if (SocketController.Instance == null) return false;
         var match = SocketController.Instance.Match;
-        return match != null && !Equals(SceneManager.GetActiveScene().name, "FieldGame");
+        return match != null && Equals(SceneManager.GetActiveScene().name, "SalaDeEspera");
     }
 
     public static SceneController Instance {

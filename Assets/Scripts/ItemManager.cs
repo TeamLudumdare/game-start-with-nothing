@@ -9,17 +9,23 @@ public class ItemManager : MonoBehaviour
     [SerializeField]
     private GameObject myPrefab;
     private int numOfItems = 0;
+
     private void OnMouseDown()
     {
         if (gameObject.tag == "Chest") {
             BuyItem();
         }
     }
+
     private void BuyItem()
     {
+
+        numOfItems = GameManager.Instance.Player.items.Length;
+
         Instantiate(myPrefab, new Vector3(listItemsBar[numOfItems].transform.position.x, listItemsBar[numOfItems].transform.position.y,
                                           listItemsBar[numOfItems].transform.position.z -0.5f),Quaternion.identity);
-        numOfItems++;
         //TODO: ENVIAR PARA O SERVIDOR QUE FOI ADIONADO UM ITEM A SUA LISTA, PARA ELE ATUALIZAR PARA TODOS OS JOGADORES
+        SocketController.Instance.AdicionarItem("ItemName", 0);
+        
     }
 }

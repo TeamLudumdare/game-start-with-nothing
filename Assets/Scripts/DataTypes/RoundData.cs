@@ -5,6 +5,6 @@ using System.Collections.Generic;
 public class RoundData
 {
     public int round;
-    public List<TurnData> turns;
+    public TurnData[] turns;
     public string _id;
 }

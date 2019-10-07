@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class LobbyData
 {
     public int players;
-    public List<PlayerData> playersData;
+    public PlayerData[] playersData;
     public PlayerData host;
     public string room;
     public string _id;

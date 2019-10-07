@@ -4,8 +4,8 @@ using System.Collections.Generic;
 [Serializable]
 public class MatchData
 {
-    public List<PlayerData> players;
+    public PlayerData[] players;
     public String room;
-    public List<RoundData> rounds;
+    public RoundData[] rounds;
     public string _id;
 }

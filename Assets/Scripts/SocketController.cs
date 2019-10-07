@@ -72,6 +72,10 @@ public class SocketController : MonoBehaviour
     private void SetInfoMatch (SocketIOEvent e)
     {
         match = JsonUtility.FromJson<MatchData>(e.data.ToString());
+        foreach (PlayerData p in match.players)
+        {
+            Debug.Log(p._id + " with cards: " + p.items.Length);
+        }
     }
 
     public void FazerLogin (string room, string nomePlayer) {
@@ -97,11 +101,11 @@ public class SocketController : MonoBehaviour
 
     public void AdicionarItem (string sprite, int itemId) {
         
-        Dictionary<string, string> data = new Dictionary<string, string>();
+        Dictionary<string, JSONObject> data = new Dictionary<string, JSONObject>();
 
-        data["item"] = "{ \"sprite\": " + sprite + ", \"itemId\": " + itemId + " }";
-        data["player"] = "{ \"_id\": " + player._id + " }";
-        data["match"] = "{ \"_id\": " + match._id + " }";
+        data["item"] = new JSONObject("{ \"sprite\": \"" + sprite + "\", \"itemId\": " + itemId + " }");
+        data["player"] = new JSONObject("{ \"_id\": \"" + player._id + "\" }");
+        data["match"] = new JSONObject("{ \"_id\": \"" + match._id + "\" }");
 
         socket.Emit("AdicionarItem", new JSONObject(data));
     }
